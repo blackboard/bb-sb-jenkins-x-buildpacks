@@ -1,9 +1,6 @@
 extends:
   import: classic
   file: maven/pipeline.yaml
-agent:
-  label: jenkins-newman
-  container: newman
 pipelines:
   pullRequest:
     build:
