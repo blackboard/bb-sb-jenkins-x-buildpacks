@@ -19,6 +19,14 @@ spec:
 {{ toYaml .Values.podAnnotations | indent 8 }}
 {{- end }}
     spec:
+      volumes:
+      - name: app-config-volume
+        configMap:
+{{- if .Values.service.name }}
+          name: {{ .Values.service.name }}
+{{- else }}
+          name: {{ template "fullname" . }}
+{{- end }}
       containers:
       - name: {{ .Chart.Name }}
         image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
@@ -31,6 +39,9 @@ spec:
         ports:
         - containerPort: {{ .Values.service.appPort }}
         - containerPort: {{ .Values.service.adminPort }}
+        volumeMounts:
+        - name: app-config-volume
+          mountPath: {{ .Values.appConfig.configPath }}
         livenessProbe:
           httpGet:
             path: {{ .Values.probePath }}

@@ -20,3 +20,9 @@ preview:
     repository:
     tag:
     pullPolicy: IfNotPresent
+  resources:
+    limits:
+      memory: 1024Mi
+
+# Add an appConfig block if the application.yml requires overrides in the preview environment
+# appConfig:
