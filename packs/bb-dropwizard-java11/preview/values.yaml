@@ -1,0 +1,28 @@
+
+expose:
+  Annotations:
+    helm.sh/hook: post-install,post-upgrade
+    helm.sh/hook-delete-policy: hook-succeeded
+  config:
+    exposer: Ingress
+    http: true
+    tlsacme: false
+
+cleanup:
+  Args:
+    - --cleanup
+  Annotations:
+    helm.sh/hook: pre-delete
+    helm.sh/hook-delete-policy: hook-succeeded
+
+preview:
+  image:
+    repository:
+    tag:
+    pullPolicy: IfNotPresent
+  resources:
+    limits:
+      memory: 1024Mi
+
+# Add an appConfig block if the application.yml requires overrides in the preview environment
+# appConfig:
